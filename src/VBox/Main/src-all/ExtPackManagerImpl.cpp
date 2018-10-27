@@ -2141,10 +2141,22 @@ HRESULT ExtPackManager::initExtPackManager(VirtualBox *a_pVirtualBox, VBOXEXTPAC
      * Figure some stuff out before creating the instance data.
      */
     char szBaseDir[RTPATH_MAX];
-    int rc = RTPathAppPrivateArchTop(szBaseDir, sizeof(szBaseDir));
-    AssertLogRelRCReturn(rc, E_FAIL);
-    rc = RTPathAppend(szBaseDir, sizeof(szBaseDir), VBOX_EXTPACK_INSTALL_DIR);
-    AssertLogRelRCReturn(rc, E_FAIL);
+    int rc;
+
+    const char* vboxExtpackDir = getenv("VBOX_EXTPACK_DIR");
+    if(vboxExtpackDir == NULL) {
+        rc = RTPathAppPrivateArchTop(szBaseDir, sizeof(szBaseDir));
+        AssertLogRelRCReturn(rc, E_FAIL);
+        printf("ExtPack: szBaseDir is '%s'", szBaseDir);
+        rc = RTPathAppend(szBaseDir, sizeof(szBaseDir), VBOX_EXTPACK_INSTALL_DIR);
+        AssertLogRelRCReturn(rc, E_FAIL);
+        printf("ExtPack: szBaseDir is '%s'", szBaseDir);
+    }
+    else {
+        printf("ExtPack: VBOX_EXTPACK_DIR found");
+        rc = RTStrCopy(szBaseDir, sizeof(szBaseDir), vboxExtpackDir);
+        printf("ExtPack: setting szBaseDir to '%s'", szBaseDir);
+    }
 
     char szCertificatDir[RTPATH_MAX];
     rc = RTPathAppPrivateNoArch(szCertificatDir, sizeof(szCertificatDir));
