@@ -829,8 +829,6 @@ static RTEXITCODE DoInstall(int argc, char **argv)
                 if (pszBaseDir)
                     return RTMsgErrorExit(RTEXITCODE_SYNTAX, "Too many --base-dir options");
                 pszBaseDir = ValueUnion.psz;
-                if (!IsValidBaseDir(pszBaseDir))
-                    return RTMsgErrorExit(RTEXITCODE_FAILURE, "Invalid base directory: '%s'", pszBaseDir);
                 break;
 
             case 'c':
@@ -966,8 +964,6 @@ static RTEXITCODE DoUninstall(int argc, char **argv)
                 if (pszBaseDir)
                     return RTMsgErrorExit(RTEXITCODE_SYNTAX, "Too many --base-dir options");
                 pszBaseDir = ValueUnion.psz;
-                if (!IsValidBaseDir(pszBaseDir))
-                    return RTMsgErrorExit(RTEXITCODE_FAILURE, "Invalid base directory: '%s'", pszBaseDir);
                 break;
 
             case 'n':
@@ -1061,8 +1057,6 @@ static RTEXITCODE DoCleanup(int argc, char **argv)
                 if (pszBaseDir)
                     return RTMsgErrorExit(RTEXITCODE_SYNTAX, "Too many --base-dir options");
                 pszBaseDir = ValueUnion.psz;
-                if (!IsValidBaseDir(pszBaseDir))
-                    return RTMsgErrorExit(RTEXITCODE_FAILURE, "Invalid base directory: '%s'", pszBaseDir);
                 break;
 
             case 'h':
