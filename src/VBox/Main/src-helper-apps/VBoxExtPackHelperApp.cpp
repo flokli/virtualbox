@@ -174,29 +174,6 @@ static bool IsValidCertificateDir(const char *pszCertDir)
 
 
 /**
- * Checks if the base directory is valid.
- *
- * @returns true if it is valid, false if it isn't.
- * @param   pszBaesDir          The base directory to validate.
- */
-static bool IsValidBaseDir(const char *pszBaseDir)
-{
-    /*
-     * Just be darn strict for now.
-     */
-    char szCorrect[RTPATH_MAX];
-    int rc = RTPathAppPrivateArchTop(szCorrect, sizeof(szCorrect));
-    if (RT_FAILURE(rc))
-        return false;
-    rc = RTPathAppend(szCorrect, sizeof(szCorrect), VBOX_EXTPACK_INSTALL_DIR);
-    if (RT_FAILURE(rc))
-        return false;
-
-    return RTPathCompare(szCorrect, pszBaseDir) == 0;
-}
-
-
-/**
  * Cleans up a temporary extension pack directory.
  *
  * This is used by 'uninstall', 'cleanup' and in the failure path of 'install'.
